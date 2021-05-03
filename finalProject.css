@@ -1,0 +1,48 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    padding: 40px;
+}
+
+.state-borders {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 0.5px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 700;
+    color: #0099FF
+}
+
+.state-selected {
+    fill: rgb(84,36,55) !important
+}
+/* On mouse hover, lighten state color */
+path:hover {
+	fill-opacity: .7;
+}
+
+/* Style for Custom Tooltip */
+.tooltip {   
+ 	position: absolute;           
+	text-align: center;           
+	width: 60px;                  
+	height: 28px;                 
+	padding: 2px;             
+	font: 12px sans-serif;        
+	background: white;   
+	border: 0px;      
+	border-radius: 8px;           
+	pointer-events: none; 
+    visibility: hidden;        
+}
+        
+/* Legend Font Style
+body {
+	font: 11px sans-serif;
+} */
