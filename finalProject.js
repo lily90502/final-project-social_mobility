@@ -29,7 +29,34 @@ const getMinMaxStateAverage = (mobilityData) => {
     return [d3.min(avgs), d3.max(avgs)]
 }
 
+const getStateAvg = (mobilityData, stateName) => {
+    const abbr = stateNameToAbbr[stateName]
+    let stateData = mobilityData.filter(x => x.state === abbr)
+    let stateMobilityData = stateData.map(x => { return parseFloat(x[mobilityRate])})
 
+    return d3.mean(stateMobilityData)
+}
+
+const isMobilityRateNotNan = (x) => {
+    return x[mobilityRate] !== ""
+}
+
+const getCollegeMobilityRates = (mobilityData, abbr) => {
+        let filtered = mobilityData.filter( x => x.state === abbr)
+
+        let nullRemoved = filtered.filter(isMobilityRateNotNan)
+        
+
+        let sorted = nullRemoved.sort((x,y) =>  {return parseFloat(y.mr_kq5_pq1)- parseFloat(x.mr_kq5_pq1)}).slice(0,10)
+
+        let result = []
+
+        for (const object of sorted) { 
+            result[object.name] = object[mobilityRate]
+        }
+
+        return  result
+}
 
 const generateMap = (stateData, mobilityData) => {
 
@@ -62,7 +89,7 @@ const generateMap = (stateData, mobilityData) => {
 
     // console.log(stateData)
     var projection = d3.geoAlbersUsa()
-                        .translate([width/3, height/2])
+                        .translate([width/3, height/5])
                         .scale([1000])
     
     var path = d3.geoPath()
@@ -74,10 +101,16 @@ const generateMap = (stateData, mobilityData) => {
                 .attr("width", width)
                 .attr("height", height)
     
-    var tooltip = d3.select("body")
+    var tooltip = d3.select("tooltip")
                     .append("div")
                     .attr("class", "tooltip")
                     .style("visibility", "hidden")
+    
+    const stateNameHtml = d3.select("state")
+
+    const stats = d3.select("stats")
+    
+    var collegeTable = d3.select("collegeTable")
 
     // console.log(stateData.features)
     //bind data to SVG and create one path per GeoJSON feature 
@@ -101,9 +134,8 @@ const generateMap = (stateData, mobilityData) => {
        .on("mouseover", function(e, d) {
             
 
-            tooltip.text(d.properties.name)
+            
             // console.log(d.properties.name)
-            tooltip.style("visibility", "visible")
                            
        })
        .on("click", function(e, d) {
@@ -112,7 +144,27 @@ const generateMap = (stateData, mobilityData) => {
 
             d3.select(this).classed('state-selected', true) 
 
+            let stateName = d.properties.name
+            let abbr = stateNameToAbbr[stateName]
+            let stateAvg = getStateAvg(mobilityData, stateName)
+            stateNameHtml.text(`${stateName}`)
+            stats.text(`Avg Mobility Rate : ${stateAvg}`)
+            tooltip.style("visibility", "visible")
             stateSelected(d.properties.name)
+
+            
+            let collegeToMobilityRateAvg = getCollegeMobilityRates(mobilityData, abbr)
+
+            let blue  = ["christa", "jebi", 'mbrim']
+
+            
+            collegeTable.selectAll('div')
+                .data(blue)
+                .enter()
+                .append('div')
+                .text('blah')
+
+
        })
 
     function stateSelected(stateName) {
