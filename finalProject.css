@@ -1,7 +1,14 @@
 body {
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    padding: 40px;
+    display: grid;
+    grid-template-rows: 20% 80%;
+    /* font-size: 16px; */
+    /* padding: 40px; */
+
+}
+.page-body{
+    display: grid;
+    grid-template-columns: 60% 40%;
 }
 
 .state-borders {
@@ -19,6 +26,11 @@ h1 {
     color: #0099FF !important;
 }
 
+state {
+    font-size: 3em;
+    font-weight: 700;
+    color: #0099FF
+}
 .state-selected {
     fill: rgb(84,36,55) !important;
 }
@@ -29,17 +41,12 @@ path:hover {
 
 /* Style for Custom Tooltip */
 .tooltip {   
- 	position: absolute;           
-	text-align: center;           
-	width: 60px;                  
-	height: 28px;                 
-	padding: 2px;             
-	font: 12px sans-serif;        
-	background: white;   
-	border: 0px;      
-	border-radius: 8px;           
-	pointer-events: none; 
-    visibility: hidden;        
+    visibility: hidden;       
+}
+
+tooltip {
+    display: flex;
+    flex-flow: column;
 }
         
 /* Legend Font Style
