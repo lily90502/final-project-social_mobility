@@ -16,11 +16,11 @@ body {
 h1 {
     font-size: 3em;
     font-weight: 700;
-    color: #0099FF
+    color: #0099FF !important;
 }
 
 .state-selected {
-    fill: rgb(84,36,55) !important
+    fill: rgb(84,36,55) !important;
 }
 /* On mouse hover, lighten state color */
 path:hover {
@@ -46,3 +46,16 @@ path:hover {
 body {
 	font: 11px sans-serif;
 } */
+
+div.tooltip_scatter {
+    position: absolute;
+    text-align: left;
+    width: auto;
+    height: auto;
+    padding: 6px;
+    font: 12px sans-serif;
+    /* background: lightsteelblue; */
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
